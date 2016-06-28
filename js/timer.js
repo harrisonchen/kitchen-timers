@@ -4,7 +4,8 @@ var Timer = React.createClass({
       total_time: this.props.total_time,
       time_left: this.props.total_time,
       timer_index: this.props.timer_index,
-      pause: true
+      pause: true,
+      ready: false,
     }
   },
   componentDidMount: function() {
@@ -18,24 +19,30 @@ var Timer = React.createClass({
     }
     else {
       clearInterval(this.timer);
+      this.setState({
+        ready: true
+      })
     }
   },
   timer_start: function() {
-    if(this.state.pause) {
+    if(this.state.pause && !this.state.ready) {
       this.state.pause = false;
       clearInterval(this.timer);
       this.timer = setInterval(this.tick, 1000);
     }
   },
   timer_stop: function() {
-    this.state.pause = true
-    clearInterval(this.timer);
+    if(!this.state.ready) {
+      this.state.pause = true
+      clearInterval(this.timer);
+    }
   },
   timer_clear: function() {
     this.state.pause = true
     clearInterval(this.timer);
     this.setState({
-      time_left: this.state.total_time
+      time_left: this.state.total_time,
+      ready: false
     });
   },
   removeTimer: function() {
@@ -54,7 +61,10 @@ var Timer = React.createClass({
           {timer_name} ({Math.floor(total_time/60/60)}h {Math.floor(total_time/60%60)}m)
         </div>
         <div className="timer-time-left">
-          {Math.floor(time_left/60/60)}:{Math.floor(time_left/60%60)}:{time_left%60}
+          {
+            !this.state.ready ?
+              Math.floor(time_left/60/60)+ ":" + Math.floor(time_left/60%60) + ":" + time_left%60 : <span className="ready">--- Ready ---</span>
+          }
         </div>
         <button onClick={this.timer_start} className="button-start">Start</button>
         <button onClick={this.timer_stop} className="button-stop">Pause</button>
@@ -138,7 +148,9 @@ var TimerList = React.createClass({
   },
   componentDidMount: function() {
     this.setState({
-      timers: []
+      timers: [
+        {label: 'Sample Recipe', time: 1}
+      ]
     });
   },
   displayTimerForm: function() {
