@@ -1,8 +1,8 @@
 var Timer = React.createClass({
   getInitialState: function() {
     return {
-      total_time: this.props.time_left,
-      time_left: this.props.time_left,
+      total_time: this.props.total_time,
+      time_left: this.props.total_time,
       pause: true
     }
   },
@@ -30,20 +30,29 @@ var Timer = React.createClass({
     this.state.pause = true
     clearInterval(this.timer);
   },
+  timer_clear: function() {
+    this.state.pause = true
+    clearInterval(this.timer);
+    this.setState({
+      time_left: this.state.total_time
+    });
+  },
   render: function() {
     var timer_name = this.props.timer_name
     var time_left = this.state.time_left
+    var total_time = this.state.total_time
 
     return (
       <div className="timer">
         <div className="timer-name">
-          {timer_name}
+          {timer_name} ({Math.floor(total_time/60/60)}H {Math.floor(total_time/60%60)})
         </div>
         <div className="timer-time-left">
           {Math.floor(time_left/60/60)}:{Math.floor(time_left/60%60)}:{time_left%60}
         </div>
         <button onClick={this.timer_start} className="button-start">Start</button>
         <button onClick={this.timer_stop} className="button-stop">Pause</button>
+        <button onClick={this.timer_clear} className="button-clear">Clear</button>
       </div>
     );
   }
@@ -139,7 +148,7 @@ var TimerList = React.createClass({
     var timerList = [];
     for(var i = 0; i < timers.length; i++) {
       timerList.push(
-        <Timer timer_name={timers[i]["label"]} time_left={timers[i]["time"]} />
+        <Timer timer_name={timers[i]["label"]} total_time={timers[i]["time"]} />
       )
     }
     return (

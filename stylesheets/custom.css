@@ -66,6 +66,23 @@ html {
   color: #FFFFFF;
 }
 
+.timer .button-clear {
+  border: 1px solid #A1A1A1;
+  background-color: #A1A1A1;
+}
+
+.timer .button-clear:hover {
+  border: 1px solid #A1A1A1;
+  background-color: #FFFFFF;
+  color: #A1A1A1;
+}
+
+.timer .button-clear:active {
+  border: 1px solid #A1A1A1;
+  background-color: #A1A1A1;
+  color: #FFFFFF;
+}
+
 .dark-overlay {
   position: absolute;
   top: 0;
