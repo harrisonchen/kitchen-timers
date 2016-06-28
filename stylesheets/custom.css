@@ -66,8 +66,23 @@ html {
   color: #FFFFFF;
 }
 
-.new-timer {
-  margin: 8px;
+.dark-overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.new-timer .form {
+  position: absolute;
+  display: inline-block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: left;
+  background-color: #FFFFFF;
+  padding: 50px;
 }
 
 .new-timer label {
@@ -110,4 +125,45 @@ html {
 .new-timer button:active {
   background-color: #1E78FA;
   color: #FFFFFF;
+}
+
+.display-timer-form-btn {
+  font-size: 16px;
+  margin-right: 8px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #1E78FA;
+  background-color: #1E78FA;
+  font-weight: 300;
+  color: #FFFFFF;
+}
+
+.display-timer-form-btn:hover {
+  background-color: #FFFFFF;
+  color: #1E78FA;
+}
+
+.display-timer-form-btn:active {
+  background-color: #1E78FA;
+  color: #FFFFFF;
+}
+
+.timer-list {
+  text-align: center;
+}
+
+.close-form-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 32px !important;
+  color: rgba(0, 0, 0, 0.25) !important;
+}
+
+.close-form-btn:hover {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.close-form-btn:active {
+  color: rgba(0, 0, 0, 1) !important;
 }
