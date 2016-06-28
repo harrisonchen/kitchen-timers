@@ -62,7 +62,8 @@ var NewTimerForm = React.createClass({
   getInitialState: function() {
     return {
       timer_label: "Fish & Chips",
-      timer_time: "30"
+      timer_time_hours: "0",
+      timer_time_minutes: "30"
     }
   },
   updateLabel: function(event) {
@@ -70,18 +71,32 @@ var NewTimerForm = React.createClass({
       timer_label: event.target.value
     });
   },
-  updateTime: function(event) {
+  updateHours: function(event) {
     this.setState({
-      timer_time: event.target.value
+      timer_time_hours: event.target.value
+    });
+  },
+  updateMinutes: function(event) {
+    this.setState({
+      timer_time_minutes: event.target.value
     });
   },
   createTimer: function() {
     var timer_label = this.state.timer_label;
-    var timer_time = Number(this.state.timer_time);
+    var timer_time_hours = Number(this.state.timer_time_hours);
+    var timer_time_minutes = Number(this.state.timer_time_minutes);
+    var total_time_in_minutes = 0;
+    if(!isNaN(timer_time_hours)) {
+      total_time_in_minutes += timer_time_hours * 60;
+    }
+    if(!isNaN(timer_time_minutes)) {
+      total_time_in_minutes += timer_time_minutes;
+    }
 
-    if(timer_label != "" && !isNaN(timer_time)) {
+
+    if(timer_label != "") {
       console.log("Created a Timer");
-      (this.props.success)(timer_label, timer_time*60);
+      (this.props.success)(timer_label, total_time_in_minutes*60);
     }
     else {
       console.log("Failed to create Timer :(");
@@ -97,8 +112,10 @@ var NewTimerForm = React.createClass({
           <i className="close-form-btn fa fa-times" onClick={this.hideForm} aria-hidden="true"></i>
           <label>Label: </label><br />
           <input type="text" value={this.state.timer_label} onChange={this.updateLabel} autoFocus={true} /><br /><br />
+          <label>Hours: </label><br />
+          <input type="text" value={this.state.timer_time_hours} onChange={this.updateHours} /><br /><br />
           <label>Minutes: </label><br />
-          <input type="text" value={this.state.timer_time} onChange={this.updateTime} /><br /><br />
+          <input type="text" value={this.state.timer_time_minutes} onChange={this.updateMinutes} /><br /><br />
           <button onClick={this.createTimer}>Create Timer</button>
         </div>
       </div>
