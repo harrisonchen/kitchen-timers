@@ -22,7 +22,11 @@ var Timer = React.createClass({
       this.setState({
         ready: true
       })
+      this.timer = setInterval(this.soundReady, 1000);
     }
+  },
+  soundReady: function() {
+    document.getElementById('cuckoo-sound').play();
   },
   timer_start: function() {
     if(this.state.pause && !this.state.ready) {
@@ -50,7 +54,7 @@ var Timer = React.createClass({
     (this.props.removeTimerCallback)(this.props.timer_index)
   },
   render: function() {
-    var timer_name = this.props.timer_name
+    var timer_name = this.props.timer_label
     var time_left = this.state.time_left
     var total_time = this.state.total_time
 
@@ -186,7 +190,7 @@ var TimerList = React.createClass({
     var timerList = [];
     for(var i = 0; i < timers.length; i++) {
       timerList.push(
-        <Timer timer_name={timers[i]["label"]} total_time={timers[i]["time"]} timer_index={i} removeTimerCallback={this.removeTimer} />
+        <Timer timer_label={timers[i]["label"]} total_time={timers[i]["time"]} timer_index={i} removeTimerCallback={this.removeTimer} />
       )
     }
     return (
