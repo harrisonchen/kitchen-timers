@@ -3,6 +3,7 @@ var Timer = React.createClass({
     return {
       total_time: this.props.total_time,
       time_left: this.props.total_time,
+      timer_index: this.props.timer_index,
       pause: true
     }
   },
@@ -37,6 +38,10 @@ var Timer = React.createClass({
       time_left: this.state.total_time
     });
   },
+  removeTimer: function() {
+    clearInterval(this.timer);
+    (this.props.removeTimerCallback)(this.props.timer_index)
+  },
   render: function() {
     var timer_name = this.props.timer_name
     var time_left = this.state.time_left
@@ -44,8 +49,9 @@ var Timer = React.createClass({
 
     return (
       <div className="timer">
+        <i className="remove-timer-btn fa fa-times" onClick={this.removeTimer} aria-hidden="true"></i>
         <div className="timer-name">
-          {timer_name} ({Math.floor(total_time/60/60)}H {Math.floor(total_time/60%60)})
+          {timer_name} ({Math.floor(total_time/60/60)}h {Math.floor(total_time/60%60)}m)
         </div>
         <div className="timer-time-left">
           {Math.floor(time_left/60/60)}:{Math.floor(time_left/60%60)}:{time_left%60}
@@ -132,11 +138,7 @@ var TimerList = React.createClass({
   },
   componentDidMount: function() {
     this.setState({
-      timers: [
-        {label: 'Salmon', time: 45*60},
-        {label: 'Chicken Thighs', time: 90*60},
-        {label: 'Carrots', time: 10}
-      ]
+      timers: []
     });
   },
   displayTimerForm: function() {
@@ -160,12 +162,19 @@ var TimerList = React.createClass({
       timers: timers
     });
   },
+  removeTimer: function(timer_index) {
+    var timers = this.state.timers
+    timers.splice(timer_index, 1)
+    this.setState({
+      timers: timers
+    });
+  },
   render: function() {
     var timers = this.state.timers;
     var timerList = [];
     for(var i = 0; i < timers.length; i++) {
       timerList.push(
-        <Timer timer_name={timers[i]["label"]} total_time={timers[i]["time"]} />
+        <Timer timer_name={timers[i]["label"]} total_time={timers[i]["time"]} timer_index={i} removeTimerCallback={this.removeTimer} />
       )
     }
     return (

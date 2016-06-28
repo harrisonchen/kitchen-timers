@@ -9,11 +9,25 @@ html {
 }
 
 .timer {
+  position: relative;
   display: inline-block;
   border: 1px solid black;
   margin: 8px;
-  padding: 8px;
+  padding: 32px;
 }
+
+.timer:hover .remove-timer-btn {
+  color: rgba(0, 0, 0, 0.25) !important;
+}
+
+.timer:hover .remove-timer-btn:hover {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.timer:hover .remove-timer-btn:active {
+  color: rgba(0, 0, 0, 1) !important;
+}
+
 
 .timer .timer-name {
   font-size: 32px;
@@ -89,6 +103,7 @@ html {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.75);
+  z-index: 1;
 }
 
 .new-timer .form {
@@ -100,6 +115,7 @@ html {
   text-align: left;
   background-color: #FFFFFF;
   padding: 50px;
+  z-index: 2;
 }
 
 .new-timer label {
@@ -183,4 +199,12 @@ html {
 
 .close-form-btn:active {
   color: rgba(0, 0, 0, 1) !important;
+}
+
+.remove-timer-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 32px !important;
+  color: rgba(0, 0, 0, 0) !important;
 }
